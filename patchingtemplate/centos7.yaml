@@ -1,0 +1,26 @@
+---
+- name: Patch CentOS 7 box
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update yum cache
+      yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+      register: yum_update_result
+
+    - name: Check if updates are available
+      debug:
+        var: yum_update_result 
+
+    - name: Install updates
+      yum:
+        name: '*'
+        state: latest
+      when: yum_update_result.changed
+
+    - name: Reboot if updates were installed
+      reboot:
+      when: yum_update_result.changed

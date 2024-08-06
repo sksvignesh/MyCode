@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+     - name: upload QualysCloudAgent deb  package
+       copy: src=/etc/ansible/playbooks/splunk-upgrade/splunkforwarder-9.0.4-de405f4a7979-linux-2.6-amd64.deb
+              dest="/tmp/"
+       when: ansible_os_family == 'Debian'
+     
+     - name: upload   QualysCloudAgent deb package
+       copy: src=/etc/ansible/playbooks/splunk-upgrade/splunkforwarder-8.2.9-4a20fb65aa78-linux-2.6-amd64.deb
+              dest="/tmp/"
+       when: ansible_os_family == 'Debian'
+     
+     - name: Upload QualysCloudAgent deb package
+       copy: src=/etc/ansible/playbooks/splunk-upgrade/splunkforwarder-8.2.7.1-c2b65bc24aea-linux-2.6-amd64.deb
+             dest="/tmp/"
+       when: ansible_os_family == 'Debian'
+     
+     - name: upload QualysCloudAgent deb  package
+       copy: src=/etc/ansible/playbooks/splunk-upgrade/splunkforwarder-8.2.9-4a20fb65aa78-linux-2.6-x86_64.rpm
+              dest="/tmp/"
+       when: ansible_os_family == 'RedHat'
+     
+     - name: upload   QualysCloudAgent deb package
+       copy: src=/etc/ansible/playbooks/splunk-upgrade/splunkforwarder-9.0.4-de405f4a7979-linux-2.6-x86_64.rpm
+              dest="/tmp/"
+       when: ansible_os_family == 'RedHat'  
+     
+     - name: upload SplunkUpgrade2023.sh scripts
+       copy: src=/etc/ansible/playbooks/splunk-upgrade/SplunkUpgrade2023.sh
+             dest="/tmp/"
+     
+     - name: execute the script
+       command: "/bin/sh -x /tmp/SplunkUpgrade2023.sh"
